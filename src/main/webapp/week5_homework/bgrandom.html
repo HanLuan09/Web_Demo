@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Random</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        html {
+            font-size: 62.5%;
+            line-height: 1.6 rem;
+            box-sizing: border-box;
+        }
+        html, body {
+            padding: 0;
+            margin: 0;
+        }
+        .main {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background: linear-gradient(to right,rgb(255, 255, 0), rgb(255, 0, 0));
+        }
+        .header,
+        .footer {
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .header-text {
+            font-size: 4.2rem ;
+            text-transform: uppercase;
+            letter-spacing: 2.2rem;
+            font-weight: 900;
+            color: #4b4949;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+        }
+        .footer-text {
+            font-size: 2.3rem ;
+            text-transform: uppercase;
+            letter-spacing: 1rem;
+            font-weight: 600;
+            color: #444;
+        }
+        .container-click + .container-click {
+            margin-left: 15px;
+        }
+        #footer-text-color {
+            min-width: 70px;
+            margin-top: 10px;
+            font-size: 2.12rem;
+            font-weight: 900;
+            color: #444;
+        }
+        #container-btn {
+            min-width: 80px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <form action="background-random" method="POST">
+            <div class="header">
+                <h1 class="header-text">Backgroud</h1>
+                <h1 class="header-text">Gradient</h1>
+            </div>
+            <div class="container">
+                <input class="container-click" id="container-left" type="color" onchange="getColorLeft(event)">
+                <input class="container-click" id="container-right" type="color" onchange="getColorRight(event)">
+                <button class="container-click" id="container-btn" type="button" onclick="btnFunction()">Random</button>
+            </div>
+            <div class="footer">
+                <h2 class="footer-text">This is the backgroud</h2>
+                <span id="footer-text-color">linear-gradient(to right,rgb(255, 255, 0), rgb(255, 0, 0));</span>
+            </div>
+        </form>
+    </div>
+    <script>
+        var colorMain = document.querySelector('.main');
+        const inputLeft = document.querySelector('#container-left');
+        const inputRight = document.querySelector('#container-right');
+        var btnRandom = document.getElementById('container-btn');
+        
+        var rgbStringLeft ='rgb(255, 255, 0)';
+        inputLeft.value = "#FFFF00";
+        var rgbStringRight = 'rgb(255, 0, 0)';
+        inputRight.value = "#FF0000";
+        var textColor = document.getElementById("footer-text-color");
+
+        function getColorLeft(event) {
+            // Lấy giá trị màu từ phần tử input
+            const color = event.target.value;
+            const r = parseInt(color.substring(1, 3), 16);
+            const g = parseInt(color.substring(3, 5), 16);
+            const b = parseInt(color.substring(5, 7), 16);
+            // Tạo chuỗi màu RGB
+            rgbStringLeft = `rgb(${r}, ${g}, ${b})`;
+            // thay đổi bg
+            colorMain.style.background = `linear-gradient(to right,${rgbStringLeft}, ${rgbStringRight})`;
+            textColor.innerText = `linear-gradient(to right,${rgbStringLeft}, ${rgbStringRight})`;
+        }
+        function getColorRight(event) {
+            // Lấy giá trị màu từ phần tử input
+            const color = event.target.value;
+            const r = parseInt(color.substring(1, 3), 16);
+            const g = parseInt(color.substring(3, 5), 16);
+            const b = parseInt(color.substring(5, 7), 16);
+            // Tạo chuỗi màu RGB
+            rgbStringRight = `rgb(${r}, ${g}, ${b})`;
+            // thay đổi bg
+            colorMain.style.background = `linear-gradient(to right,${rgbStringLeft}, ${rgbStringRight})`;
+            textColor.innerText = `linear-gradient(to right,${rgbStringLeft}, ${rgbStringRight})`;
+        }
+        function colorRandom(){
+            return Math.floor(Math.random()*256);
+        }
+        function rgbToHex(r, g, b) {
+            const hex = ((r << 16) | (g << 8) | b).toString(16);
+            return "#" + hex.padStart(6, "0");
+        }
+        function btnFunction() {
+            const r1 = colorRandom();
+            const g1 = colorRandom();
+            const b1 = colorRandom();
+            const r2 = colorRandom();
+            const g2 = colorRandom();
+            const b2 = colorRandom();
+            rgbStringLeft = `rgb(${r1}, ${g1}, ${b1})`;
+            rgbStringRight = `rgb(${r2}, ${g2}, ${b2})`;
+            inputLeft.value = rgbToHex(r1, g1, b1);
+            inputRight.value = rgbToHex(r2, g2, b2);
+            colorMain.style.background = `linear-gradient(to right,${rgbStringLeft}, ${rgbStringRight})`;
+            textColor.innerText = `linear-gradient(to right,${rgbStringLeft}, ${rgbStringRight})`;
+        }
+    
+    </script>
+</body>
+</html>
